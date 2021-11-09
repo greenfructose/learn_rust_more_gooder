@@ -18,6 +18,7 @@ fn main() {
         println!("{} is in v", i);
     }
     println!("Mean, median, mode of v2 = {:?}", mean_median_mode(v2));
+    println!("{}", igpay_atinlay(&String::from("My name is Justin")))
 }
 
 fn find_mean(list: &Vec<i32>) -> i32 {
@@ -56,4 +57,29 @@ fn mean_median_mode(mut list: Vec<i32>) -> HashMap<String, i32> {
     };
     map.insert(String::from("Mode"), mode);
     map
+}
+
+fn igpay_atinlay(string: &String) -> String {
+    let vowels = vec!['a', 'e', 'i', 'o', 'u'];
+    let mut words = string.split_whitespace();
+    let mut new_word = String::new();
+    let mut new_words = Vec::new();
+    for word in words{
+        let char = word.chars().next().unwrap();
+        if vowels.contains(&char){
+            new_word.push_str(&*format!("{}hay", word));
+        }else{
+            new_word = String::from(&word[1..]);
+            let mut suffix = word.chars().next().unwrap().to_string().to_lowercase() + &String::from("ay");
+            if char.is_uppercase() {
+                let mut first_char = &new_word.chars().next().unwrap().to_string().to_uppercase();
+                new_word = format!("{}{}", first_char.to_string(), &word[2..]);
+            }
+            new_word.push_str(&suffix);
+        }
+        new_words.push(String::from(&new_word));
+        new_word.clear();
+    }
+    new_words.join(" ")
+
 }
